@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saveetha School of Engineering — Course Registration</title>
+<style>
+  :root{
+    --navy: #16233F;
+    --navy-deep: #0E1830;
+    --cream: #F6F3EC;
+    --paper: #FCFAF6;
+    --gold: #B4893D;
+    --gold-light: #D9B876;
+    --ink: #232A38;
+    --muted: #6B7280;
+    --line: #E2DDD0;
+    --ok: #3F6B4E;
+    --err: #A23B3B;
+    --radius: 4px;
+  }
+
+  *{ box-sizing: border-box; }
+  html{ scroll-behavior: smooth; }
+  body{
+    margin:0;
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+  }
+  h1,h2,h3{
+    font-family: Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    margin: 0;
+  }
+  p, li, label, input, select, td, th{
+    font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+  }
+  a{ color: var(--navy); }
+  a:hover{ color: var(--gold); }
+
+  /* ---------- Header & Nav ---------- */
+  header.site-header{
+    background: var(--navy-deep);
+    color: var(--cream);
+    border-bottom: 3px solid var(--gold);
+  }
+  .header-inner{
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 22px 24px 16px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 12px;
+  }
+  .brand{ display:flex; align-items:center; gap:14px; }
+  .crest{
+    width: 46px; height:46px; border-radius:50%;
+    background: linear-gradient(135deg, var(--gold-light), var(--gold));
+    display:flex; align-items:center; justify-content:center;
+    font-family: Georgia, serif; font-weight:700; color: var(--navy-deep); font-size: 18px;
+    flex-shrink:0;
+  }
+  .brand-text h1{ font-size: 1.5rem; letter-spacing: .3px; }
+  .brand-text p{ font-family: Georgia, serif; font-style: italic; color: var(--gold-light); margin-top:2px; font-size:.85rem; }
+
+  nav.main-nav{ background: var(--navy); }
+  nav.main-nav ul{
+    max-width: 1100px; margin: 0 auto; padding: 0 24px;
+    list-style: none; display:flex; flex-wrap:wrap; gap: 4px;
+  }
+  nav.main-nav a{
+    display:block; padding: 13px 16px; color: var(--cream);
+    text-decoration:none; font-family:'Segoe UI',sans-serif; font-size:.92rem;
+    border-bottom: 3px solid transparent;
+    transition: border-color .18s ease, background .18s ease;
+  }
+  nav.main-nav a:hover{ border-bottom-color: var(--gold); background: rgba(255,255,255,.04); color:#fff; }
+
+  /* ---------- Layout ---------- */
+  main{ max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+  section{ padding: 52px 0; border-bottom: 1px solid var(--line); }
+  section:last-of-type{ border-bottom: none; }
+  .section-head{ margin-bottom: 26px; max-width: 640px; }
+  .section-head p{ color: var(--muted); }
+  .section-head h2{ font-size: 1.7rem; color: var(--navy-deep); }
+  .kicker{ font-family: Georgia, serif; font-style: italic; color: var(--gold); font-size: .95rem; margin-bottom: 4px; display:block; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding: 60px 0 50px;
+    display:grid; grid-template-columns: 1.3fr 1fr; gap: 40px; align-items:center;
+  }
+  .hero h2{ font-size: 2.3rem; color: var(--navy-deep); line-height:1.2; }
+  .hero p.lead{ color:#4B5160; font-size:1.05rem; max-width: 46ch; margin-top:14px;}
+  .hero-stats{ display:flex; gap: 26px; margin-top: 26px; }
+  .hero-stats div{ border-left: 3px solid var(--gold); padding-left: 12px; }
+  .hero-stats strong{ display:block; font-size:1.5rem; color: var(--navy-deep); font-family:Georgia,serif;}
+  .hero-stats span{ font-family:'Segoe UI',sans-serif; font-size:.8rem; color: var(--muted); }
+  .hero-card{
+    background: var(--paper); border:1px solid var(--line); border-radius: var(--radius);
+    padding: 26px; box-shadow: 0 1px 0 var(--line);
+  }
+  .hero-card h3{ font-size:1.05rem; color: var(--navy-deep); margin-bottom:10px; }
+  .hero-card ul{ margin: 0; padding-left: 18px; color:#4B5160; font-family:'Segoe UI',sans-serif; font-size:.92rem;}
+  .hero-card li{ margin-bottom: 6px; }
+
+  /* ---------- Courses table ---------- */
+  table.courses{
+    width:100%; border-collapse: collapse; background: var(--paper);
+    border:1px solid var(--line);
+  }
+  table.courses caption{ text-align:left; font-family: Georgia, serif; font-style:italic; color:var(--muted); padding-bottom:10px; }
+  table.courses th{
+    text-align:left; background: var(--navy-deep); color: var(--cream);
+    padding: 12px 14px; font-family:'Segoe UI',sans-serif; font-weight:600; font-size:.85rem;
+    letter-spacing:.2px;
+  }
+  table.courses td{ padding: 12px 14px; border-top: 1px solid var(--line); font-size:.94rem; }
+  table.courses tbody tr:hover{ background: #FBF3E2; }
+  .tag{
+    display:inline-block; padding:2px 9px; border-radius: 20px; font-size:.72rem;
+    font-family:'Segoe UI',sans-serif; font-weight:600;
+  }
+  .tag.core{ background:#E4ECE6; color: var(--ok); }
+  .tag.elective{ background:#F3E7D6; color: var(--gold); }
+
+  /* ---------- Lists / instructions ---------- */
+  .instructions{ display:grid; grid-template-columns: 1fr 1fr; gap: 34px; }
+  .instructions ol, .instructions ul{ padding-left: 20px; color:#3E4453; font-family:'Segoe UI',sans-serif; font-size:.94rem;}
+  .instructions li{ margin-bottom:10px; }
+  .instructions h3{ font-size:1rem; color: var(--navy-deep); margin-bottom: 12px; font-family:Georgia,serif;}
+  .links-row{ margin-top:18px; display:flex; gap:18px; flex-wrap:wrap; font-family:'Segoe UI',sans-serif; font-size:.9rem;}
+
+  /* ---------- Form ---------- */
+  form#regForm{
+    display:grid; grid-template-columns: 1fr 1fr; gap: 20px 24px;
+    background: var(--paper); border:1px solid var(--line); padding: 30px; border-radius: var(--radius);
+  }
+  .field{ display:flex; flex-direction:column; gap:6px; }
+  .field.full{ grid-column: 1 / -1; }
+  .field label{ font-size:.82rem; font-weight:600; color: var(--navy-deep); }
+  .field .hint{ font-size:.75rem; color: var(--muted); font-weight:400; }
+  input, select{
+    padding: 10px 12px; border:1px solid #C9C2AE; border-radius: var(--radius);
+    font-size:.93rem; background:#fff; color: var(--ink);
+  }
+  input:focus, select:focus{ outline: 2px solid var(--gold-light); outline-offset:1px; border-color: var(--gold); }
+  .field.error input, .field.error select{ border-color: var(--err); }
+  .error-msg{ font-size:.76rem; color: var(--err); min-height: 14px; }
+
+  fieldset{ border:1px solid var(--line); border-radius: var(--radius); padding: 14px 16px; }
+  legend{ font-size:.82rem; font-weight:600; color: var(--navy-deep); padding:0 6px; }
+  .course-check{ display:flex; align-items:center; gap:8px; padding: 6px 0; font-size:.9rem; }
+  .course-check input{ width:auto; padding:0; }
+
+  .form-actions{ grid-column: 1/-1; display:flex; gap:14px; align-items:center; margin-top:6px; }
+  button{
+    background: var(--navy-deep); color:#fff; border:none; padding: 12px 26px;
+    border-radius: var(--radius); font-family:'Segoe UI',sans-serif; font-weight:600; font-size:.92rem;
+    cursor:pointer; transition: background .18s ease, transform .12s ease;
+  }
+  button:hover{ background: var(--gold); color: var(--navy-deep); }
+  button:active{ transform: translateY(1px); }
+  button.secondary{ background:transparent; color: var(--navy-deep); border:1px solid #C9C2AE; }
+  button.secondary:hover{ background:#EFE9DA; color: var(--navy-deep); }
+
+  /* ---------- Live selection + summary ---------- */
+  .selection-panel{
+    margin-top: 26px; display:grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .panel{ background: var(--paper); border:1px solid var(--line); border-radius: var(--radius); padding: 20px; }
+  .panel h3{ font-size:.95rem; color: var(--navy-deep); margin-bottom: 12px; }
+  #selectedList{ list-style:none; padding:0; margin:0; font-family:'Segoe UI',sans-serif; font-size:.9rem;}
+  #selectedList li{ display:flex; justify-content:space-between; padding: 7px 0; border-bottom:1px dashed var(--line); }
+  #selectedList li:last-child{ border-bottom:none; }
+  .totals{ display:flex; gap: 22px; font-family:'Segoe UI',sans-serif; }
+  .totals div strong{ display:block; font-size:1.6rem; color: var(--navy-deep); font-family:Georgia,serif; }
+  .totals div span{ font-size:.75rem; color: var(--muted); }
+  .empty-note{ color: var(--muted); font-family:'Segoe UI',sans-serif; font-size:.88rem; font-style:italic; }
+
+  #summaryBox{
+    margin-top: 24px; background: var(--navy-deep); color: var(--cream);
+    border-radius: var(--radius); padding: 26px; display:none;
+  }
+  #summaryBox.show{ display:block; }
+  #summaryBox h3{ color: var(--gold-light); font-size:1.1rem; margin-bottom:14px; }
+  #summaryBox dl{ display:grid; grid-template-columns: 160px 1fr; gap: 8px 14px; font-family:'Segoe UI',sans-serif; font-size:.92rem; margin:0;}
+  #summaryBox dt{ color:#B9C0D0; }
+  #summaryBox dd{ margin:0; }
+  .status-banner{
+    font-family:'Segoe UI',sans-serif; font-size:.88rem; padding: 10px 14px; border-radius: var(--radius);
+    margin-top: 14px; display:none;
+  }
+  .status-banner.show{ display:block; }
+  .status-banner.success{ background:#E4ECE6; color: var(--ok); }
+  .status-banner.fail{ background:#F5E3E3; color: var(--err); }
+
+  /* ---------- Contact & Footer ---------- */
+  .contact-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+  .contact-card{ background: var(--paper); border:1px solid var(--line); padding: 18px; border-radius: var(--radius); font-family:'Segoe UI',sans-serif; font-size:.9rem;}
+  .contact-card h3{ font-size:.9rem; color: var(--navy-deep); margin-bottom:6px; font-family:Georgia,serif;}
+
+  footer{ background: var(--navy-deep); color:#AEB6C6; text-align:center; padding: 22px; font-family:'Segoe UI',sans-serif; font-size:.82rem; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 760px){
+    .hero{ grid-template-columns: 1fr; }
+    .instructions{ grid-template-columns: 1fr; }
+    form#regForm{ grid-template-columns: 1fr; }
+    .selection-panel{ grid-template-columns: 1fr; }
+    .contact-grid{ grid-template-columns: 1fr; }
+    nav.main-nav ul{ overflow-x:auto; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-inner">
+    <div class="brand">
+      <div class="crest">SSE</div>
+      <div class="brand-text">
+        <h1>Saveetha School of Engineering</h1>
+        <p>Office of the Registrar</p>
+      </div>
+    </div>
+  </div>
+  <nav class="main-nav">
+    <ul>
+      <li><a href="#home">Home</a></li>
+      <li><a href="#courses">Courses</a></li>
+      <li><a href="#instructions">Instructions</a></li>
+      <li><a href="#register">Register</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a href="https://www.google.com/search?q=university+course+catalog" target="_blank" rel="noopener">Full Catalog ↗</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+
+  <!-- HOME / HERO -->
+  <section id="home" class="hero">
+    <div>
+      <span class="kicker">Fall Semester Registration</span>
+      <h2>Register for your courses in a few minutes.</h2>
+      <p class="lead">Browse this term's available courses, check your eligibility, and submit your registration details below — no paperwork, no queues.</p>
+      <div class="hero-stats">
+        <div><strong>5</strong><span>Courses Open</span></div>
+        <div><strong>6</strong><span>Departments</span></div>
+        <div><strong>24</strong><span>Max Credits</span></div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>Before you begin</h3>
+      <ul>
+        <li>Keep your Register Number handy.</li>
+        <li>Use your official university email address.</li>
+        <li>Confirm your current semester (1–8).</li>
+        <li>Select at least one course to register.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- COURSES -->
+  <section id="courses">
+    <div class="section-head">
+      <span class="kicker">Course Catalog</span>
+      <h2>Available Courses This Term</h2>
+      <p>Five courses are open for registration across core and elective tracks.</p>
+    </div>
+    <table class="courses">
+      <caption>Table 1 — Open courses, credits, and type</caption>
+      <thead>
+        <tr>
+          <th>Course Code</th>
+          <th>Course Name</th>
+          <th>Credits</th>
+          <th>Course Type</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>CS201</td><td>Data Structures &amp; Algorithms</td><td>4</td><td><span class="tag core">Core</span></td></tr>
+        <tr><td>CS215</td><td>Database Management Systems</td><td>3</td><td><span class="tag core">Core</span></td></tr>
+        <tr><td>CS230</td><td>Web Technologies</td><td>3</td><td><span class="tag elective">Elective</span></td></tr>
+        <tr><td>CS245</td><td>Machine Learning Foundations</td><td>4</td><td><span class="tag elective">Elective</span></td></tr>
+        <tr><td>HS110</td><td>Technical Communication</td><td>2</td><td><span class="tag core">Core</span></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- INSTRUCTIONS -->
+  <section id="instructions">
+    <div class="section-head">
+      <span class="kicker">Before You Register</span>
+      <h2>Instructions &amp; Eligibility</h2>
+    </div>
+    <div class="instructions">
+      <div>
+        <h3>Registration Steps</h3>
+        <ol>
+          <li>Review the course catalog above.</li>
+          <li>Confirm you meet the eligibility requirements.</li>
+          <li>Complete the registration form with accurate details.</li>
+          <li>Select one or more courses for the term.</li>
+          <li>Submit and review your registration summary.</li>
+        </ol>
+      </div>
+      <div>
+        <h3>Eligibility Requirements</h3>
+        <ul>
+          <li>Must be an actively enrolled student.</li>
+          <li>Semester value must be between 1 and 8.</li>
+          <li>No outstanding fee dues on record.</li>
+          <li>Elective courses require department approval.</li>
+        </ul>
+        <div class="links-row">
+          <a href="#courses">↑ View course catalog</a>
+          <a href="#contact">Contact the registrar</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REGISTRATION FORM -->
+  <section id="register">
+    <div class="section-head">
+      <span class="kicker">Registration Form</span>
+      <h2>Submit Your Details</h2>
+      <p>All fields are required. Your summary will appear instantly below — the page won't reload.</p>
+    </div>
+
+    <form id="regForm" novalidate>
+      <div class="field" id="regNoField">
+        <label for="regNo">Register Number</label>
+        <input type="text" id="regNo" placeholder="e.g. 21IT045">
+        <span class="error-msg" id="regNoError"></span>
+      </div>
+
+      <div class="field" id="nameField">
+        <label for="studentName">Student Name</label>
+        <input type="text" id="studentName" placeholder="e.g. Ananya Rao">
+        <span class="error-msg" id="nameError"></span>
+      </div>
+
+      <div class="field" id="emailField">
+        <label for="email">Email Address <span class="hint">(university domain)</span></label>
+        <input type="text" id="email" placeholder="e.g. ananya@saveetha.edu">
+        <span class="error-msg" id="emailError"></span>
+      </div>
+
+      <div class="field" id="deptField">
+        <label for="department">Department</label>
+        <select id="department">
+          <option value="">Select department</option>
+          <option>Information Technology</option>
+          <option>Computer Science</option>
+          <option>Electronics &amp; Communication</option>
+          <option>Mechanical Engineering</option>
+          <option>Civil Engineering</option>
+        </select>
+        <span class="error-msg" id="deptError"></span>
+      </div>
+
+      <div class="field" id="semField">
+        <label for="semester">Semester <span class="hint">(1–8)</span></label>
+        <input type="number" id="semester" min="1" max="8" placeholder="e.g. 5">
+        <span class="error-msg" id="semError"></span>
+      </div>
+
+      <div class="field full" id="courseField">
+        <fieldset>
+          <legend>Course Selection</legend>
+          <label class="course-check"><input type="checkbox" class="courseBox" data-code="CS201" data-name="Data Structures &amp; Algorithms" data-credits="4"> CS201 — Data Structures &amp; Algorithms (4 cr)</label>
+          <label class="course-check"><input type="checkbox" class="courseBox" data-code="CS215" data-name="Database Management Systems" data-credits="3"> CS215 — Database Management Systems (3 cr)</label>
+          <label class="course-check"><input type="checkbox" class="courseBox" data-code="CS230" data-name="Web Technologies" data-credits="3"> CS230 — Web Technologies (3 cr)</label>
+          <label class="course-check"><input type="checkbox" class="courseBox" data-code="CS245" data-name="Machine Learning Foundations" data-credits="4"> CS245 — Machine Learning Foundations (4 cr)</label>
+          <label class="course-check"><input type="checkbox" class="courseBox" data-code="HS110" data-name="Technical Communication" data-credits="2"> HS110 — Technical Communication (2 cr)</label>
+        </fieldset>
+        <span class="error-msg" id="courseError"></span>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit">Submit Registration</button>
+        <button type="button" class="secondary" id="resetBtn">Clear Form</button>
+      </div>
+    </form>
+
+    <!-- Live selection + running totals (updates without reload) -->
+    <div class="selection-panel">
+      <div class="panel">
+        <h3>Selected Courses</h3>
+        <p class="empty-note" id="emptyNote">No courses selected yet — check a box above.</p>
+        <ul id="selectedList"></ul>
+      </div>
+      <div class="panel">
+        <h3>Running Total</h3>
+        <div class="totals">
+          <div><strong id="totalCourses">0</strong><span>Courses Selected</span></div>
+          <div><strong id="totalCredits">0</strong><span>Total Credits</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="status-banner" id="statusBanner"></div>
+
+    <!-- Final summary, shown on submit -->
+    <div id="summaryBox">
+      <h3>Registration Summary</h3>
+      <dl>
+        <dt>Student Name</dt><dd id="sumName"></dd>
+        <dt>Register Number</dt><dd id="sumRegNo"></dd>
+        <dt>Department</dt><dd id="sumDept"></dd>
+        <dt>Selected Courses</dt><dd id="sumCourses"></dd>
+        <dt>Total Credits</dt><dd id="sumCredits"></dd>
+      </dl>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="section-head">
+      <span class="kicker">Get in Touch</span>
+      <h2>Contact Details</h2>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-card">
+        <h3>Registrar's Office</h3>
+        <p>Admin Block, Room 214<br>Mon–Fri, 9:00 AM – 5:00 PM</p>
+      </div>
+      <div class="contact-card">
+        <h3>Email</h3>
+        <p><a href="mailto:registrar@saveetha.edu">registrar@saveetha.edu</a></p>
+      </div>
+      <div class="contact-card">
+        <h3>Phone</h3>
+        <p>+91 44 2345 6789</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  &copy; 2026 Saveetha School of Engineering — Office of the Registrar. This portal is a course project prototype.
+</footer>
+
+<script>
+/* ============================================================
+   Course Registration Portal — client-side logic
+   Sections: (1) course data store, (2) live selection + totals,
+   (3) field validation, (4) submit handler + summary render
+   ============================================================ */
+
+// ---- 1. Course data store (array of objects) ----
+// Kept in sync with the checkboxes' data-* attributes.
+let selectedCourses = [];
+
+// ---- 2. Reusable function: recompute totals from selectedCourses ----
+function calculateTotals(courses) {
+  const totalCourses = courses.length;
+  const totalCredits = courses.reduce((sum, c) => sum + c.credits, 0);
+  return { totalCourses, totalCredits };
+}
+
+function renderSelection() {
+  const listEl = document.getElementById('selectedList');
+  const emptyNote = document.getElementById('emptyNote');
+  listEl.innerHTML = '';
+
+  if (selectedCourses.length === 0) {
+    emptyNote.style.display = 'block';
+  } else {
+    emptyNote.style.display = 'none';
+    selectedCourses.forEach(c => {
+      const li = document.createElement('li');
+      li.innerHTML = `<span>${c.code} — ${c.name}</span><span>${c.credits} cr</span>`;
+      listEl.appendChild(li);
+    });
+  }
+
+  const { totalCourses, totalCredits } = calculateTotals(selectedCourses);
+  document.getElementById('totalCourses').textContent = totalCourses;
+  document.getElementById('totalCredits').textContent = totalCredits;
+}
+
+document.querySelectorAll('.courseBox').forEach(box => {
+  box.addEventListener('change', function () {
+    const code = this.dataset.code;
+    if (this.checked) {
+      selectedCourses.push({
+        code: code,
+        name: this.dataset.name,
+        credits: parseInt(this.dataset.credits, 10)
+      });
+    } else {
+      selectedCourses = selectedCourses.filter(c => c.code !== code);
+    }
+    renderSelection();
+  });
+});
+
+// ---- 3. Validation helpers ----
+function setError(fieldId, errorId, message) {
+  document.getElementById(fieldId).classList.add('error');
+  document.getElementById(errorId).textContent = message;
+}
+function clearError(fieldId, errorId) {
+  document.getElementById(fieldId).classList.remove('error');
+  document.getElementById(errorId).textContent = '';
+}
+
+function validateForm() {
+  let isValid = true;
+
+  const regNo = document.getElementById('regNo').value.trim();
+  const name = document.getElementById('studentName').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const dept = document.getElementById('department').value;
+  const semester = document.getElementById('semester').value.trim();
+
+  // Register number: required, min 4 chars
+  if (regNo.length < 4) {
+    setError('regNoField', 'regNoError', 'Enter a valid register number.');
+    isValid = false;
+  } else {
+    clearError('regNoField', 'regNoError');
+  }
+
+  // Name: required, letters and spaces only
+  if (!/^[A-Za-z ]{2,}$/.test(name)) {
+    setError('nameField', 'nameError', 'Enter your full name (letters only).');
+    isValid = false;
+  } else {
+    clearError('nameField', 'nameError');
+  }
+
+  // Email: basic pattern check
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailPattern.test(email)) {
+    setError('emailField', 'emailError', 'Enter a valid email address.');
+    isValid = false;
+  } else {
+    clearError('emailField', 'emailError');
+  }
+
+  // Department: required
+  if (dept === '') {
+    setError('deptField', 'deptError', 'Please select a department.');
+    isValid = false;
+  } else {
+    clearError('deptField', 'deptError');
+  }
+
+  // Semester: required, integer 1-8
+  const semNum = Number(semester);
+  if (!semester || !Number.isInteger(semNum) || semNum < 1 || semNum > 8) {
+    setError('semField', 'semError', 'Semester must be a number from 1 to 8.');
+    isValid = false;
+  } else {
+    clearError('semField', 'semError');
+  }
+
+  // At least one course selected
+  if (selectedCourses.length === 0) {
+    document.getElementById('courseError').textContent = 'Select at least one course.';
+    isValid = false;
+  } else {
+    document.getElementById('courseError').textContent = '';
+  }
+
+  return isValid;
+}
+
+// ---- 4. Submit handler: validate, then render summary without reload ----
+document.getElementById('regForm').addEventListener('submit', function (e) {
+  e.preventDefault(); // no page reload
+
+  const banner = document.getElementById('statusBanner');
+  const summaryBox = document.getElementById('summaryBox');
+
+  if (!validateForm()) {
+    banner.textContent = 'Please fix the highlighted fields before submitting.';
+    banner.className = 'status-banner show fail';
+    summaryBox.classList.remove('show');
+    return;
+  }
+
+  const { totalCourses, totalCredits } = calculateTotals(selectedCourses);
+
+  document.getElementById('sumName').textContent = document.getElementById('studentName').value.trim();
+  document.getElementById('sumRegNo').textContent = document.getElementById('regNo').value.trim();
+  document.getElementById('sumDept').textContent = document.getElementById('department').value;
+  document.getElementById('sumCourses').textContent = selectedCourses.map(c => c.code).join(', ');
+  document.getElementById('sumCredits').textContent = `${totalCredits} (${totalCourses} courses)`;
+
+  summaryBox.classList.add('show');
+  banner.textContent = 'Registration submitted successfully.';
+  banner.className = 'status-banner show success';
+
+  // Debug checkpoint — used during development to confirm payload shape.
+  // Caught a bug here where totalCredits was NaN because credits were
+  // read as strings from dataset; fixed with parseInt() in the change handler above.
+  console.log('Registration submitted:', {
+    regNo: document.getElementById('regNo').value.trim(),
+    name: document.getElementById('studentName').value.trim(),
+    email: document.getElementById('email').value.trim(),
+    department: document.getElementById('department').value,
+    semester: document.getElementById('semester').value.trim(),
+    selectedCourses,
+    totalCourses,
+    totalCredits
+  });
+});
+
+document.getElementById('resetBtn').addEventListener('click', function () {
+  document.getElementById('regForm').reset();
+  selectedCourses = [];
+  renderSelection();
+  ['regNoField','nameField','emailField','deptField','semField'].forEach(f => {
+    document.getElementById(f).classList.remove('error');
+  });
+  document.getElementById('courseError').textContent = '';
+  document.getElementById('statusBanner').classList.remove('show');
+  document.getElementById('summaryBox').classList.remove('show');
+});
+
+// Initial render
+renderSelection();
+</script>
+
+</body>
+</html>
